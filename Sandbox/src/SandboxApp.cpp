@@ -1,6 +1,4 @@
-//namespace Spectrum {
-//	__declspec(dllimport) void Print();
-//}
+
 
 #include <Spectrum.h>
 

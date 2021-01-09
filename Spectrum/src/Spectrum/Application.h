@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Core.h"
-
+#include "Events/Event.h"
 namespace Spectrum {
-	class SP_API Application // we literally use the macro definition
+	class SP_API Application // we use the macro definition
 	{
 	public:
 		Application();

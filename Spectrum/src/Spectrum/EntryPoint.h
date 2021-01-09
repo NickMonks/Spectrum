@@ -8,8 +8,12 @@ extern Spectrum::Application* Spectrum::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	auto app = Spectrum::CreateApplication();
+	Spectrum::Log::Init();
+	SP_CORE_WARN("Initialized Log");
 	
+
+
+	auto app = Spectrum::CreateApplication();
 	app ->Run();
 	delete app;
 
