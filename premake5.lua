@@ -9,6 +9,16 @@ workspace "Spectrum"
 	}
 -- we define a variable for our path to the target dir
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+-- Include directories relative to root folder (solution directory)
+-- we create a struct with all of our included directories
+IncludeDir = {}
+IncludeDir["GLFW"] = "Spectrum/vendor/GLFW/include"
+
+-- the same way we include in c++, lua does the same. it copies all the info inside the file and pastes it here
+-- we do that for the premake5.lua of GLFW, which is a project static library
+include "Spectrum/vendor/GLFW"
+
 project "Spectrum"
 	location "Spectrum"
 	kind "SharedLib" -- basically dll export
@@ -18,6 +28,11 @@ project "Spectrum"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	-- objdir is the intermidiate files
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	-- PRECOMPILE HEADER
+	pchheader "sppch.h"
+	pchsource "Spectrum/src/sppch.cpp"
+
 
 	files -- files to include in premake. the '**' means to look recursively
 	{
@@ -29,7 +44,14 @@ project "Spectrum"
 	includedirs -- directories to include
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}" -- we include the GLFW as a struct 1
+	}
+
+	links
+	{-- as said, project GLFW is pasted in the document so we can link it 
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows" -- project configurations to apply for certain platforms, for example in this case is windows

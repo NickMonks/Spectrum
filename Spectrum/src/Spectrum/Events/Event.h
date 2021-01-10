@@ -1,9 +1,8 @@
 #pragma once
+#include "sppch.h"
 
 #include "../Core.h"
 
-#include <string>
-#include <functional>
 
 namespace Spectrum {
 
@@ -45,8 +44,7 @@ namespace Spectrum {
 
 	class SP_API Event
 	{
-		friend class EventDispatcher;
-
+		friend class EventDispatcher; // making EventDispatcher as a friend allow eventdispatcher to access private and protected members of evebts
 	public:
 		// these member functions are pure virtual which must be implemented by derived classes
 		virtual EventType GetEventType() const = 0;
@@ -73,13 +71,25 @@ namespace Spectrum {
 		EventDispatcher(Event& event) // we receive a reference to an event, i.e is like an interface (it could be any type of event)
 			:m_Event(event){}
 
-		template<typename T> // T is the event function for each type
+		template<typename T> 
 		bool Dispatch(EventFn<T> func)
+
+			// T is the event function for each type
+			// Its important to notice that we dont need to define T when we call this. It will automatically deduce the type T. 
+			// example: EventFn<WindowClose> func : std::function<bool(WindowClose&)> 
+			// operator () of a std::function will automatically invoke/call the function. 
+
 		{
 			if (m_Event.GetEventType() == T::GetStaticType()) // thannks to call the function static, this is possibl
 			{
 				m_Event.m_Handled = func(*(T*)&m_Event); // type punning - because we dont know what type is m_Event (is the base class), we now type punning it (essentially cast the pointer to m_Event to T type and then dereference it. 
+														 // we have access to m_Handled thanks to giving it access after being a friend class.
+														// once this is converted, it invokes func due to the overload operator (). the return type is the boolean. 
+														// Example: WindowCloseEvent : dispatcher.Dispatch<WindowCloseEvent>(func) -> 
+				return true;
 			}
+
+			return false;
 		}
 	private:
 		Event& m_Event;

@@ -14,3 +14,12 @@
 #endif
 
 #define BIT(x) (1<<x) // This shifts the x 1 bit left. 
+
+#ifdef SP_ENABLE_ASSERTS
+	#define SP_ASSERT(x,...) {if(!(x)) { SP_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak();}} // __debugbreak adds a debug breakpoint
+	#define SP_COREASSERT(x,...) {if(!(x)) { SP_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak();}}
+#else
+	#define SP_ASSERT(x,...)
+	#define SP_CORE_ASSERT(x,...)
+#endif
+
