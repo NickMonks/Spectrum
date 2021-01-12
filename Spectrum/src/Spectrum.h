@@ -4,6 +4,7 @@
 // for use by spectrum applications
 
 #include "Spectrum/Application.h"
+#include "Spectrum/Layer.h"
 #include "Spectrum/Log.h"
 
 // -- Entry Point -------------------------

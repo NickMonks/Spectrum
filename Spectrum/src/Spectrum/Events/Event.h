@@ -58,7 +58,6 @@ namespace Spectrum {
 			return GetCategoryFlags() & category;
 		}
 
-	protected:
 		bool m_Handled = false; // to know if an event has been handled or not 
 	};
 

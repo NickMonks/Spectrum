@@ -72,14 +72,17 @@ project "Spectrum"
 
 	filter "configurations:Debug"
 		defines "SP_DEBUG"
-		symbols "On"
+		buildoptions "/MDd" -- to link the correct version of the dll at runtime. A good explanation is here: https://forums.codeguru.com/showthread.php?313913-When-to-use-Multithreaded-Single-Threaded-Multithreaded-DLL
+		symbols "On"		-- https://stackoverflow.com/questions/35310117/debug-assertion-failed-expression-acrt-first-block-header
 
 	filter "configurations:Release"
 		defines "SP_RELEASE"
+		buildoptions "/MD" -- IMPORTANT: MUST BE DONE IN BOTH!!!
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "SP_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 
@@ -124,13 +127,16 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "SP_DEBUG"
+		buildoptions "/MDd" -- to link the correct version of the dll at runtime. A good explanation is here: https://forums.codeguru.com/showthread.php?313913-When-to-use-Multithreaded-Single-Threaded-Multithreaded-DLL
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "SP_RELEASE"
+		buildoptions "/MD" -- to link the correct version of the dll at runtime. A good explanation is here: https://forums.codeguru.com/showthread.php?313913-When-to-use-Multithreaded-Single-Threaded-Multithreaded-DLL
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "SP_DIST"
+		buildoptions "/MD" -- to link the correct version of the dll at runtime. A good explanation is here: https://forums.codeguru.com/showthread.php?313913-When-to-use-Multithreaded-Single-Threaded-Multithreaded-DLL
 		optimize "On"
 

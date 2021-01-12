@@ -35,6 +35,16 @@ namespace Spectrum {
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
 		SP_CORE_TRACE("{0}", e);
+
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		{
+			// this means: it is a pointer (iterator) of a pointer (Layer*)
+			(*--it)->OnEvent(e);
+
+				if (e.m_Handled)
+					// the event will propagate until is handled, when is handled it will break the loop
+					break;
+		}
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -42,6 +52,17 @@ namespace Spectrum {
 		//When this event is called, automatically it will stop running the application
 		m_Running = false;
 		return true;
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		// we will call the push method from the layerstack class
+		m_LayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		m_LayerStack.PushOverlay(layer);
 	}
 
 	Application::~Application() {
@@ -56,6 +77,12 @@ namespace Spectrum {
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->OnUpdate();
+
+			// For each layer that we have in the stack we update it. It is essential
+			// that it does it in the correct order, to propagate the events in the correct order
+			// i.e if a button is pressed to let the upper layer know about this event. 
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate();
 		}
 	}
 }
