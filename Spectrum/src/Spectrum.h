@@ -6,6 +6,7 @@
 #include "Spectrum/Application.h"
 #include "Spectrum/Layer.h"
 #include "Spectrum/Log.h"
+#include "Spectrum/ImGui/ImGuiLayer.h"
 
 // -- Entry Point -------------------------
 #include "Spectrum/EntryPoint.h"

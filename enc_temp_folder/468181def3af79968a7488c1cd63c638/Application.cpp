@@ -93,7 +93,6 @@ namespace Spectrum {
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 
-			// IMPORTANT: Window needs to be updated after the layers
 			m_Window->OnUpdate();
 		}
 	}

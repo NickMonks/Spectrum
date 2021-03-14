@@ -4,3 +4,6 @@
 [submodule "Spectrum/vendor/GLFW"]
 	path = Spectrum/vendor/GLFW
 	url = https://github.com/thecherno/glfw
+[submodule "Spectrum/vendor/imgui"]
+	path = Spectrum/vendor/imgui
+	url = https://github.com/TheCherno/imgui
