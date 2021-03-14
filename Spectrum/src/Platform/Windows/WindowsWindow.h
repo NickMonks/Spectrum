@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Spectrum/Window.h"
-#include <GLFW/glfw3.h>
+
+struct GLFWwindow; // Use just to declare GLFW. 
 
 
 namespace Spectrum {

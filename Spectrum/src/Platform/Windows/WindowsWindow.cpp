@@ -5,6 +5,9 @@
 #include "Spectrum/Events/MouseEvent.h"
 #include "Spectrum/Events/KeyEvent.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h> //include GLFW after glad
+
 
 namespace Spectrum {
 
@@ -52,6 +55,8 @@ namespace Spectrum {
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		SP_CORE_ASSERT(status, "Failed to initialize Glad");
 		glfwSetWindowUserPointer(m_Window, &m_Data); // We pass a struct data with a function callback so it points it in the window
 		SetVSync(true);
 

@@ -14,10 +14,13 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- we create a struct with all of our included directories
 IncludeDir = {}
 IncludeDir["GLFW"] = "Spectrum/vendor/GLFW/include"
+IncludeDir["Glad"] = "Spectrum/vendor/Glad/include"
 
 -- the same way we include in c++, lua does the same. it copies all the info inside the file and pastes it here
 -- we do that for the premake5.lua of GLFW, which is a project static library
 include "Spectrum/vendor/GLFW"
+include "Spectrum/vendor/Glad"
+
 
 project "Spectrum"
 	location "Spectrum"
@@ -45,12 +48,14 @@ project "Spectrum"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}" -- we include the GLFW as a struct 1
+		"%{IncludeDir.GLFW}", -- we include the GLFW as a struct 1
+		"%{IncludeDir.Glad}" -- we include the GLFW as a struct 1
 	}
 
 	links
 	{-- as said, project GLFW is pasted in the document so we can link it 
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
